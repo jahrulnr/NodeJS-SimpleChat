@@ -25,7 +25,7 @@ npm run dev
 ## Postman
 - Set method menjadi "POST" dan inputkan url ```http://localhost:3000/api/login```. <br>
 Klik tab ```body``` dan pilih option ```raw```
-```json
+```javascript
 {
     "email": "superadmin@demo.com", // atau admin@demo.com
     "password": "123456"
