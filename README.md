@@ -1,11 +1,9 @@
 ## SimpleChat
-Aplikasi ini dibuat menggunakan Nodejs, Express dan Mysql<br>
-<br>
-<br>
+Aplikasi ini dibuat menggunakan Nodejs, Express dan Mysql
+
 ## Pengujian
 - Nodejs v18.16.0
 - NPM v9.5.1
-<br>
 
 ## Instalasi
 ```sh
@@ -15,7 +13,6 @@ cp .env.example .env # edit .env
 
 npm run dev
 ```
-<br>
 
 ## Fitur
 ### Admin
@@ -24,7 +21,6 @@ npm run dev
 - Request pertemanan
 - Terima, Tolak, Banned pertemanan
 - Kirim pesan
-<br>
 
 ## Postman
 - Set method menjadi "POST" dan inputkan url ```http://localhost:3000/api/login```. <br>
@@ -38,7 +34,6 @@ Klik tab ```body``` dan pilih option ```raw```
 - Salin value ```token```
 - Buka tab ```Authorization```, pilih type ```Bearer Token```
 - Pastekan ke field token.
-<br>
 
 ## Catatan
 Aplikasi ini belum pernah di tes ke web/app ui. Masih dalam pengujian menggunakan postman.
