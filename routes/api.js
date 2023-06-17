@@ -9,6 +9,7 @@ const messageController = require('../app/controllers/message');
 const friendController = require('../app/controllers/friend');
 const role = require('../config/role');
 
+// router.
 router.post('/login', validateLogin, awaitHandlerFactory(userController.userLogin));
 
 router.get('/users/active', auth(role.SuperUser), awaitHandlerFactory(userController.setActive))

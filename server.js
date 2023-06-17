@@ -17,6 +17,11 @@ app.use('/api', apiRouter);
 app.use('/', webRouter);
 
 app.use(ApiServerException);
+app.use((res, req, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next()
+})
 app.all('/api/*', (req, res, next) => {
   const err = new ApiHttpException(404, 'Endpoint Not Found');
   console.log(err)
