@@ -1,3 +1,8 @@
 .env
 .vscode
+.vhost.conf
 node_modules
+*.zip
+*.tar.gz
+*.tar.xz
+*.7z
