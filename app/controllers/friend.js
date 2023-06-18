@@ -17,6 +17,10 @@ class FriendController {
     }
     let friend = await FriendModel.findFriend(req.currentUser.id, req.params.id);
 
+    if(!friend){
+      throw new HttpException(400, 'Friend does\'nt exists!');
+    }
+
     res.send(friend);
   };
 
