@@ -35,5 +35,5 @@ Klik tab ```body``` dan pilih option ```raw```
 - Buka tab ```Authorization```, pilih type ```Bearer Token```
 - Pastekan ke field token.
 
-## Catatan
-Aplikasi ini belum pernah di tes ke web/app ui. Masih dalam pengujian menggunakan postman.
+## UI App
+[jahrulnr/ReactJS-SimpleChat](https://github.com/jahrulnr/ReactJS-SimpleChat)
