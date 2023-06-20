@@ -29,17 +29,11 @@ app.all('/api/*', (req, res, next) => {
   const err = new ApiHttpException(404, 'Endpoint Not Found');
   console.log(err)
   next(err);
-  // res.send({
-  //   message: "Page not found"
-  // })
 });
 app.all('*', (req, res, next) => {
   const err = new ApiHttpException(404, 'Endpoint Not Found');
   console.log(err)
   next(err);
-  // res.send({
-  //   message: "Page not found"
-  // })
 });
 
 app.listen(port, () => console.log(`🚀 Server running on port ${port}!`));
