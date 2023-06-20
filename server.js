@@ -27,12 +27,10 @@ app.use('/', webRouter);
 app.use(ApiServerException);
 app.all('/api/*', (req, res, next) => {
   const err = new ApiHttpException(404, 'Endpoint Not Found');
-  console.log(err)
   next(err);
 });
 app.all('*', (req, res, next) => {
   const err = new ApiHttpException(404, 'Endpoint Not Found');
-  console.log(err)
   next(err);
 });
 
