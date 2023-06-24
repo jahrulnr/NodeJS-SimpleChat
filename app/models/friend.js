@@ -22,7 +22,7 @@ class FriendModel {
 
   search = async (auth_id, text, active = 1) => {
     text = `%${text}%`
-    let sql = `select id, name, username, if(user_id=id, friend_id, user_id) as is_friend from users 
+    let sql = `select id, name, username, friends.type as status from users 
       left join friends on (users.id=user_id or users.id=friend_id) 
       where (name like ? or username like ?) and id<>? and active=?
       order by name limit 30`;
