@@ -24,7 +24,7 @@ class FriendModel {
     text = `%${text}%`
     let sql = `select id, name, username, friends.type as status from users 
       left join friends on (users.id=user_id or users.id=friend_id) 
-      where (name like ? or username like ?) and id<>? and active=?
+      where (name like ? or username like ?) and id<>? and active=? and (friends.type <> 2 or friends.type is null)
       order by name limit 30`;
     return await query(sql, [text, text, auth_id, active]);
   }
