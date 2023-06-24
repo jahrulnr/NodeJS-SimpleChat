@@ -15,6 +15,7 @@ router.post('/login', validateLogin, awaitHandlerFactory(userController.userLogi
 router.get('/users/active', auth(role.SuperUser), awaitHandlerFactory(userController.setActive))
 
 router.get('/friends', auth(), awaitHandlerFactory(friendController.getAll))
+router.post('/friends/search', auth(), awaitHandlerFactory(friendController.find))
 router.get('/friends/request', auth(), awaitHandlerFactory(friendController.requestList))
 router.post('/friends/request', auth(), awaitHandlerFactory(friendController.sendRequest))
 router.post('/friends/accept', auth(), awaitHandlerFactory(friendController.acceptRequest))

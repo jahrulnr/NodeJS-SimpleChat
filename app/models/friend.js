@@ -20,16 +20,30 @@ class FriendModel {
     return await query(sql, [id, id, id]);
   }
 
+  search = async (auth_id, text) => {
+    text = `%${text}%`
+    let sql = `select id, username, name from users where (username like ? or name like ? or email like ?) and id <> ?`;
+    return await query(sql, [text, text, text, auth_id]);
+  }
+
   findFriend = async (auth_id, id) => {
     const user_id = 'IF(user_id = ?, friend_id, user_id)';
     const sql = `select name, username, m.* from (SELECT ${user_id} AS friend_id, type, created_at FROM ${this.tableName}
       where (user_id = ? and friend_id = ?) or (user_id = ? and friend_id = ?) limit 1) as m join users on users.id = m.friend_id group by m.friend_id`;
     let result = (await query(sql, [auth_id, auth_id, id, id, auth_id]))[0];
-    result.type = result.type == this.REQUEST 
-      ? 'Request'
-      : result.type == this.ACCEPT 
-      ? 'Accept'
-      : 'Banned'; 
+    if (result?.type != undefined) {
+      result.type = result.type == this.REQUEST
+        ? 'Request'
+        : result.type == this.ACCEPT
+          ? 'Accept'
+          : 'Banned';
+    }
+    else {
+      console.table({
+        auth_id: auth_id,
+        id: id
+      })
+    }
 
     return result;
   }
@@ -68,7 +82,7 @@ class FriendModel {
   banFriend = async (auth_id, id) => {
     const isRequest = await this.findFriend(auth_id, id)
     let result
-    if(isRequest.length > 0){
+    if (isRequest.length > 0) {
       result = await query(
         `update ${this.tableName} set type = ? WHERE (user_id = ? and friend_id = ?) or (user_id = ? and friend_id = ?)`,
         [this.BANNED, auth_id, id, id, auth_id]

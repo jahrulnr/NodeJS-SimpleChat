@@ -11,13 +11,19 @@ class FriendController {
     res.send(friends);
   };
 
+  find = async (req, res, next) => {
+    let friends = await FriendModel.search(req.currentUser.id, req.body.search);
+
+    res.send(friends);
+  };
+
   getFriend = async (req, res, next) => {
-    if(isNaN(req.params.id)){
+    if (isNaN(req.params.id)) {
       throw new HttpException(400, 'id not valid!');
     }
     let friend = await FriendModel.findFriend(req.currentUser.id, req.params.id);
 
-    if(!friend){
+    if (!friend) {
       throw new HttpException(400, 'Friend does\'nt exists!');
     }
 
