@@ -20,13 +20,13 @@ class FriendModel {
     return await query(sql, [id, id, id]);
   }
 
-  search = async (auth_id, text) => {
+  search = async (auth_id, text, active = 1) => {
     text = `%${text}%`
     let sql = `select id, name, username, if(user_id=id, friend_id, user_id) as is_friend from users 
       left join friends on (users.id=user_id or users.id=friend_id) 
-      where (name like ? or username like ?) and id<>? 
+      where (name like ? or username like ?) and id<>? and active=?
       order by name limit 30`;
-    return await query(sql, [text, text, auth_id]);
+    return await query(sql, [text, text, auth_id, active]);
   }
 
   findFriend = async (auth_id, id) => {
