@@ -24,9 +24,9 @@ class FriendModel {
     text = `%${text}%`
     let sql = `select id, name, username, if(user_id=id, friend_id, user_id) as is_friend from users 
       left join friends on (users.id=user_id or users.id=friend_id) 
-      where (name like ? or username like ? or email like ?) and id<>? 
+      where (name like ? or username like ?) and id<>? 
       order by name limit 30`;
-    return await query(sql, [text, text, text, auth_id]);
+    return await query(sql, [text, text, auth_id]);
   }
 
   findFriend = async (auth_id, id) => {
