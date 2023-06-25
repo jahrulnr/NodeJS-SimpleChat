@@ -7,7 +7,7 @@ class MessageModel {
   }
 
   find = async (id) => {
-    let sql = `select users.id as user_id, name, \`text\`, messages.created_at from users 
+    let sql = `select users.id as user_id, name, \`text\`, readed, messages.created_at from users 
       join ${this.tableName} on (from_id=users.id or to_id=users.id) 
       where users.id <> ? and messages.id in (
         select max(id) as id from messages where (from_id=? and to_id=users.id) or (from_id=users.id and to_id=?)
