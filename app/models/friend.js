@@ -16,7 +16,8 @@ class FriendModel {
   find = async (id) => {
     const user_id = 'IF(user_id = ?, friend_id, user_id)';
     let sql = `select name, username, m.* from (SELECT ${user_id} AS friend_id, created_at FROM ${this.tableName}
-      where (user_id = ? or friend_id = ?) and type = '${this.ACCEPT}' order by created_at desc) as m join users on users.id = m.friend_id group by m.friend_id`;
+      where (user_id = ? or friend_id = ?) and type = '${this.ACCEPT}' order by created_at desc) as m 
+      join users on users.id = m.friend_id group by m.friend_id`;
     return await query(sql, [id, id, id]);
   }
 
@@ -25,7 +26,7 @@ class FriendModel {
     let sql = `select id, name, username, friends.type as status from users 
       left join friends on (users.id=user_id or users.id=friend_id) 
       where (name like ? or username like ?) and id<>? and active=? and (friends.type <> ${this.BANNED} or friends.type is null)
-      order by name limit 30`;
+      group by users.id order by name limit 30`;
     return await query(sql, [text, text, auth_id, active]);
   }
 
