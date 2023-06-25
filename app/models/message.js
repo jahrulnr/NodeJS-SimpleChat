@@ -7,23 +7,25 @@ class MessageModel {
   }
 
   find = async (id) => {
-    const user_id = 'IF(from_id = ?, to_id, from_id)';
-    let sql = `select name, m.* from (SELECT ${user_id} AS user_id, \`text\`, readed, created_at FROM ${this.tableName}
-      where from_id = ? or to_id = ? order by created_at desc limit 1) as m join users on users.id = m.user_id group by m.user_id`;
+    let sql = `select users.id as user_id, name, \`text\`, messages.created_at from users 
+      join ${this.tableName} on (from_id=users.id or to_id=users.id) 
+      where users.id <> ? and messages.id in (
+        select max(id) as id from messages where (from_id=? and to_id=users.id) or (from_id=users.id and to_id=?)
+      ) group by users.id order by messages.created_at desc`;
     return await query(sql, [id, id, id]);
   }
 
   findChat = async (auth_id, user_id, page = 0) => {
     const ipp = 10; // item per page
-    if(page <= 0) page = 0; else page--;
+    if (page <= 0) page = 0; else page--;
     const sql = `FROM ${this.tableName} WHERE (from_id=? and to_id=?) or (from_id=? and to_id=?)`;
     const sqlMessages = `SELECT * ${sql} order by created_at desc limit ${page}, ${ipp}`;
     const sqlTotalPages = `select count(id) as total ${sql}`;
     const params = [auth_id, user_id, user_id, auth_id]
     const result = {
       data: await query(sqlMessages, params),
-      page: page+1,
-      total_pages: Math.ceil((await query(sqlTotalPages, params))[0].total/ipp)
+      page: page + 1,
+      total_pages: Math.ceil((await query(sqlTotalPages, params))[0].total / ipp)
     };
 
     return result
